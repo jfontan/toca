@@ -2,7 +2,7 @@
 
 !div_size = '800px'
 
-!total_width = 41
+!total_width = 40
 !mp3_width   = 10
 !playlist_witdh = !total_width - !mp3_width - 1
 
@@ -26,3 +26,14 @@ body
 
     ul
       :list-style none
+
+table#songs
+  +span(!playlist_witdh )
+  td
+    +colborder()
+    &.file
+      +span(8)
+    &.title, &.artist, &.album
+      +span(5)
+    &.track
+      +span(2)

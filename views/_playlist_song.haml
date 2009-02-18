@@ -1,9 +1,9 @@
 %tr.song{:id => song}
-  %td
+  %td.file
     %a.delete{:href => '#'} del
     = File.basename(song) 
-  %td= info[:title]
-  %td= info[:artist]
-  %td= info[:album]
-  %td= info[:track]
+  %td.title= info[:title]
+  %td.artist= info[:artist]
+  %td.album= info[:album]
+  %td.track= info[:track]
 

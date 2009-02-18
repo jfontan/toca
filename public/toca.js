@@ -1,3 +1,13 @@
+sort_playlist = true
+
+function update_playlist(){
+    if (sort_playlist){
+      $("table#songs").tablesorter(); 
+      sort_playlist = false
+    }else{
+      $("table#songs").trigger("update"); 
+    }
+}
 
 function add_song(song){
   $.ajax({
@@ -8,13 +18,16 @@ function add_song(song){
         $(this).parents('tr').remove();
         return(false);
       });
+      update_playlist();
     }
    })
 }
 
+
 function init(){
   $('#mp3s  span.song').click(function(){
     add_song($(this).attr('id'))
+
     return(false);
   })  
 
@@ -23,7 +36,6 @@ function init(){
       add_song($(this).attr('id'))
     })
     return(false);
-                                  
   })
 
 
