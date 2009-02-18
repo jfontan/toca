@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'sinatra'
-
+require 'sass/plugin'
 
 $mp3dir = ARGV[0] 
 
@@ -61,6 +61,10 @@ __END__
   %head
     %title Toca
     %script{ :type => "text/javascript", :src => "http://jqueryjs.googlecode.com/files/jquery-1.3.1.js"}
+    %style{:type => "text/css"}
+      :sass
+        body
+          font: 0.9em sans-serif
   %body
     #main
       = yield
