@@ -1,16 +1,32 @@
+
+function add_song(song){
+  $.ajax({
+    url: '/playlist_song/' + song,
+    success: function(html){
+      $('ul#songs').append(html)
+      $('a.delete').click(function(){
+        $(this).parents('li').remove();
+        return(false);
+      });
+    }
+   })
+}
+
 function init(){
   $('#mp3s  span.song').click(function(){
-    $.ajax({
-      url: '/playlist_song/' + $(this).attr('id'),
-      success: function(html){
-        $('ul#songs').append(html)
-        $('a.delete').click(function(){
-          $(this).parents('li').remove();
-          return(false);
-        });
-      }
-     })
+    add_song($(this).attr('id'))
+    return(false);
   })  
+
+  $('#mp3s a.dir2playlist').click(function(){
+    $(this).next('ul').find('span.song').each(function() {
+      add_song($(this).attr('id'))
+    })
+    return(false);
+                                  
+  })
+
+
   $('ul#file_tree').treeview({collapsed : true});
   
   
