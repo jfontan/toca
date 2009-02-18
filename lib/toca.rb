@@ -10,7 +10,7 @@ module Files
       if File.directory? f
         sub_tree = Files::file_tree(f, filter)
         tree[:directories][f] = sub_tree if sub_tree[:files].any? || sub_tree[:directories].keys.any?
-      elsif 
+      elsif f =~ /#{filter}/
         tree[:files] << f
       end
     }
