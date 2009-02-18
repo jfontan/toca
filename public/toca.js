@@ -5,7 +5,7 @@ function update_playlist(){
       $("table#songs").tablesorter(); 
       sort_playlist = false
     }else{
-      $("table#songs").trigger("update"); 
+      $("table#songs").trigger("update").tableDnD(); 
     }
 }
 
