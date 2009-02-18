@@ -1,23 +1,8 @@
-:javascript
-  function init(){
-    $('li.song').click(function(){
-      $.ajax({
-        url: '/playlist_song/' + $(this).html(),
-        success: function(html){
-          $('ul#songs').append(html)
-        }
-       })
-    })  
-  }
-
-  $(init)
-
 #main
 
   #mp3s
-    %ul
-      - @mp3s.each do |f|
-        %li.song= f
+    %ul#file_tree
+      = tree_song("Top", @top_dir)
 
   #playlist
     %ul#songs

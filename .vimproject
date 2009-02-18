@@ -1,8 +1,12 @@
 toca=/$PWD CD=/$PWD/ filter="*.rb *.sass *.haml *.textile *.js" {
  README.textile
  toca.rb
+ lib=lib{
+  toca.rb
+ }
  views=views {
   _playlist_song.haml
+  _tree_song.haml
   index.haml
   layout.haml
   sass=sass {
@@ -10,6 +14,7 @@ toca=/$PWD CD=/$PWD/ filter="*.rb *.sass *.haml *.textile *.js" {
   }
  }
  public=public {
+  toca.js
   jquery.js
  }
 }

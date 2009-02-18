@@ -1,0 +1,11 @@
+- directories = info[:directories]
+- files = info[:files]
+%li
+  %span.folder= File.basename(name)
+  %ul
+    - directories.each do |name, dir|
+      = tree_song(name, dir)
+    - files.each do |file|
+      %li
+        %span.file.song
+          = File.basename(file)

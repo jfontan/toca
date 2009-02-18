@@ -2,7 +2,10 @@
   %head
     %title Toca
     %script{ :type => "text/javascript", :src => "/jquery.js"}
-    %link{:rel => 'stylesheet', :href => 'toca.css'}
+    %script{ :type => "text/javascript", :src => "/toca.js"}
+    %script{ :type => "text/javascript", :src => "/plugins/treeview/javascripts/jquery.treeview.js"}
+    %link{:rel => 'stylesheet', :href => '/toca.css'}
+    %link{:rel => 'stylesheet', :href => '/plugins/treeview/stylesheets/jquery.treeview.css'}
   %body
     #main
       = yield

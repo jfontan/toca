@@ -1,4 +1,6 @@
 require 'sinatra'
+require 'lib/toca'
+
 gem 'chriseppstein-compass', '~> 0.4'
 require 'compass'
  
@@ -16,8 +18,12 @@ def playlist_song(song)
   haml :_playlist_song, :locals => {:file => song}, :layout => false
 end
 
+def tree_song(name, dir)
+  haml :_tree_song, :locals => {:name => name, :info => dir}, :layout => false
+end
+
 get '/' do
-  @mp3s = `find #{$mp3dir} -name *.mp3`.split("\n")
+  @top_dir = Files.file_tree($mp3dir,'.*mp3$')
   haml :index
 end
 
