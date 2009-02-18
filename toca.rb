@@ -16,7 +16,7 @@ end
 $mp3dir = ARGV[0] 
 
 def playlist_song(song)
-  haml :_playlist_song, :locals => {:file => song}, :layout => false
+  haml :_playlist_song, :locals => {:song => song}, :layout => false
 end
 
 def tree_song(name, dir)
@@ -46,6 +46,22 @@ end
 
 get '/song/*' do
   content_type 'audio/mpeg'
+
   file = params[:splat].first
   File.open(file).read
+end
+
+get '/playlist/' do
+  content_type 'audio/x-mpegurl'
+
+  songs = params[:songs].split(/\|/).select{|f| f =~ /./}
+
+
+  out = "#EXTM3U\n"
+  songs.each{|f|
+    out += "#EXTINF, #{File.basename(f)}\n"
+    out += "http://hoop.esi.ucm.es:1984/song/" + f + "\n"
+  }
+
+  out
 end

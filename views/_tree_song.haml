@@ -7,6 +7,6 @@
       = tree_song(name, dir)
     - files.each do |file|
       %li
-        %span.file.song
+        %span.file.song{:id => file}
           = File.basename(file)
           %a{:href => '/song/' + file} play

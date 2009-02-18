@@ -1,2 +1,4 @@
-%li= file 
+%li.song{:id => song}
+  = File.basename(song) 
+  %a.delete{:href => '#'} del
 
