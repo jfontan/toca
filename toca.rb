@@ -19,7 +19,7 @@ $host = "hoop.esi.ucm.es"
 $port = Sinatra::Application::port
 
 def playlist_song(song)
-  haml :_playlist_song, :locals => {:song => song}, :layout => false
+  haml :_playlist_song, :locals => {:song => song, :info => ID3::get(song)}, :layout => false
 end
 
 def tree_song(name, dir)

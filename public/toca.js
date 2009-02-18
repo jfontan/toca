@@ -3,9 +3,9 @@ function add_song(song){
   $.ajax({
     url: '/playlist_song/' + song,
     success: function(html){
-      $('ul#songs').append(html)
+      $('table#songs').append(html)
       $('a.delete').click(function(){
-        $(this).parents('li').remove();
+        $(this).parents('tr').remove();
         return(false);
       });
     }
@@ -34,7 +34,7 @@ function init(){
 
   $('a#create_playlist').click(function(){
     songs = ""
-    $('#playlist li.song').each(function(){
+    $('#playlist tr.song').each(function(){
       songs += $(this).attr('id') + '|'
     })
     window.location = '/playlist/?songs=' + songs

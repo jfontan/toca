@@ -1,4 +1,9 @@
-%li.song{:id => song}
-  = File.basename(song) 
-  %a.delete{:href => '#'} del
+%tr.song{:id => song}
+  %td
+    %a.delete{:href => '#'} del
+    = File.basename(song) 
+  %td= info[:title]
+  %td= info[:artist]
+  %td= info[:album]
+  %td= info[:track]
 
