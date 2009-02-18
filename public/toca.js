@@ -11,7 +11,7 @@ function init(){
       }
      })
   })  
-  $('ul#file_tree').treeview();
+  $('ul#file_tree').treeview({collapsed : true});
   
   
 

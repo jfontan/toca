@@ -1,16 +1,28 @@
 @import blueprint/modules/grid.sass
 
+!div_size = '800px'
+
+!total_width = 41
+!mp3_width   = 10
+!playlist_witdh = !total_width - !mp3_width - 1
 
 body
   :font 0.9em sans-serif
+  :height = !div_size
 
 #main 
   +container()
-  +span(41)
+  +span(!total_width)
   #mp3s
-    +column(20)
+    +column(!mp3_width)
     +colborder()
+    :height = !div_size
+    :overflow auto
 
 
   #playlist
-    +column(20,"last")
+    +column(!playlist_witdh,"last")
+    :height = !div_size
+
+    ul
+      :list-style none
