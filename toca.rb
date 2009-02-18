@@ -15,6 +15,9 @@ end
 
 $mp3dir = ARGV[0] 
 
+$host = "hoop.esi.ucm.es"
+$port = Sinatra::Application::port
+
 def playlist_song(song)
   haml :_playlist_song, :locals => {:song => song}, :layout => false
 end
@@ -60,7 +63,7 @@ get '/playlist/' do
   out = "#EXTM3U\n"
   songs.each{|f|
     out += "#EXTINF, #{File.basename(f)}\n"
-    out += "http://hoop.esi.ucm.es:1984/song/" + f + "\n"
+    out += "http://#{$host}:#{$port}/song/" + f + "\n"
   }
 
   out
