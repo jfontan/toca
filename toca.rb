@@ -43,3 +43,9 @@ get '/toca.css' do
   content_type 'text/css', :charset => 'utf-8'
   sass :"sass/toca", :sass => Compass.sass_engine_options
 end
+
+get '/song/*' do
+  content_type 'audio/mpeg'
+  file = params[:splat].first
+  File.open(file).read
+end
