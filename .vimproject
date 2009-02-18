@@ -1,6 +1,6 @@
 toca=/$PWD CD=/$PWD/ filter="*.rb *.sass *.haml *.textile *.js" {
- toca.rb
  README.textile
+ toca.rb
  views=views {
   _playlist_song.haml
   index.haml

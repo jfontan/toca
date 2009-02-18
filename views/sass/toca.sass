@@ -1,3 +1,17 @@
+@import blueprint/modules/grid.sass
+
+
 body
   :font 0.9em sans-serif
 
+
+#main 
+  +container()
+  +span(41)
+  #mp3s
+    +column(20)
+    +colborder()
+
+
+  #playlist
+    +column(20,last)

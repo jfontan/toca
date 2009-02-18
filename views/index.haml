@@ -12,14 +12,14 @@
 
   $(init)
 
+#main
 
-#mp3s
-  %ul
-    - @mp3s.each do |f|
-      %li.song= f
+  #mp3s
+    %ul
+      - @mp3s.each do |f|
+        %li.song= f
 
-#playlist
-  %ul#songs
-    = playlist_song("pepe")
+  #playlist
+    %ul#songs
 
 

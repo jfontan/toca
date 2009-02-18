@@ -1,4 +1,14 @@
 require 'sinatra'
+gem 'chriseppstein-compass', '~> 0.4'
+require 'compass'
+ 
+configure do
+  Compass.configuration do |config|
+    config.project_path = File.dirname(__FILE__)
+    config.sass_dir = File.join('views', 'sass')
+  end
+end
+ 
 
 $mp3dir = ARGV[0] 
 
@@ -24,5 +34,5 @@ end
 
 get '/toca.css' do
   content_type 'text/css', :charset => 'utf-8'
-  sass :"sass/toca" 
+  sass :"sass/toca", :sass => Compass.sass_engine_options
 end
