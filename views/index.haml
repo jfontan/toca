@@ -1,8 +1,8 @@
 #main
+  :javascript 
+    eval('servers = #{$servers.to_json};')
 
   #mp3s
-    %ul#file_tree
-      = tree_song(nil, @top_dir)
 
   #playlist
     %a#create_playlist{:href => '#'} playlist
