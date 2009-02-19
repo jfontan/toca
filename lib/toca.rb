@@ -2,16 +2,25 @@ require 'id3lib'
 
 module Files
 
-  def self.file_tree(directory, filter = '.*mp3$')
-
-    tree = {
-      :files => [], 
-      :directories => {}
-    }
+  def self.has_music?(directory, filter = '.*mp3$')
     Dir.glob(directory + '/*').each{|f|
       if File.directory? f
-        sub_tree = Files::file_tree(f, filter)
-        tree[:directories][f] = sub_tree if sub_tree[:files].any? || sub_tree[:directories].keys.any?
+        return true if Files.has_music? f
+      elsif f =~ /#{filter}/
+        return true
+      end
+    }
+  end
+
+  def self.file_tree(directory, filter = '.*mp3$')
+    tree = {
+      :files => [], 
+      :directories => []
+    }
+
+    Dir.glob(directory + '/*').each{|f|
+      if File.directory? f
+        tree[:directories] << f if Files.has_music? f
       elsif f =~ /#{filter}/
         tree[:files] << f
       end
@@ -26,7 +35,6 @@ module ID3
 
   def self.get(file)
     tag = ID3Lib::Tag.new(file)
-    p tag
     {
       :title => tag.title,
       :album => tag.album,

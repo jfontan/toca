@@ -7,8 +7,11 @@
     %span.folder= File.basename(name)
     %a.dir2playlist{:href => '#'} add
   %ul
-    - directories.each do |name, dir|
-      = tree_song(name, dir)
+    - directories.each do |subdir|
+      %li.lazyload.expandable{:rel => subdir}
+        %span.folder= File.basename(subdir)
+        %ul
+     
     - files.each do |file|
       %li
         %span.file.song{:id => file}

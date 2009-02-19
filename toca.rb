@@ -22,10 +22,9 @@ def playlist_song(song)
   haml :_playlist_song, :locals => {:song => song, :info => ID3::get(song)}, :layout => false
 end
 
-def tree_song(name, dir)
-  haml :_tree_song, :locals => {:name => name, :info => dir}, :layout => false
+def tree_song(dir = nil)
+  haml :_tree_song, :locals => {:name => dir || "#{$host}:#{$port}", :info => Files.file_tree(dir || $mp3dir )}, :layout => false
 end
-
 
 
 def check_file(file) 
@@ -39,10 +38,15 @@ def check_file(file)
 end
 
 get '/' do
-  @top_dir = Files.file_tree($mp3dir,'.*mp3$')
+  @servers = ["#{$host}s:#{$port}"]
   haml :index
 end
 
+get '/tree/*' do
+  dir = params[:splat].first || nil
+  dir = nil unless dir =~ /./
+  tree_song(dir)
+end
 
 get '/playlist_song/*' do
   f = params[:splat].first
