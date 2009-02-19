@@ -26,6 +26,18 @@ def tree_song(name, dir)
   haml :_tree_song, :locals => {:name => name, :info => dir}, :layout => false
 end
 
+
+
+def check_file(file) 
+  dir = File.expand_path(File.dirname(file))
+  if dir !~ /^#{ File.expand_path($mp3dir) }/
+    return false
+  else
+    return true
+  end
+
+end
+
 get '/' do
   @top_dir = Files.file_tree($mp3dir,'.*mp3$')
   haml :index
@@ -48,10 +60,14 @@ get '/toca.css' do
 end
 
 get '/song/*' do
-  content_type 'audio/mpeg'
 
   file = params[:splat].first
-  File.open(file).read
+  if check_file(file)
+    content_type 'audio/mpeg'
+    File.open(file).read
+  else
+    "Error: Path not permited"
+  end
 end
 
 get '/playlist/' do
