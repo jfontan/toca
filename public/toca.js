@@ -62,7 +62,6 @@ function add_song(server,song){
 }
 
 function initial_servers(){
-
   $(servers).each(function(){
     $.getJSON('http://' + this + '/tree/?jsoncallback=?',function(data){
         html = data.data;
@@ -86,7 +85,42 @@ function make_playlist(){
     window.open(dataUrl(playlist,'audio/mpegurl'));  
     return(false);
 }
-function init(){
+
+function playlist(){
+    list = []; 
+    $('tr.song').each(function(){
+      song = $(this).attr("id")
+      server = $(this).attr("rel")
+      //list.push("http://" + server + "/song/" + song)
+      list.push("/song/" + song)
+    })
+
+    return(list.reverse())
+}
+
+function play(){
+    list = playlist();
+    song = list.pop();
+    try{
+    var song = soundManager.createSound({
+        id: song,
+        url: song,
+        volume: 50
+        });
+    }catch(e){
+        alert(e)
+    }
+//    song.play();
+
+    return(false);
+}
+
+soundManager.onerror = function(){
+    $('ul#controls').find().remove();
+    $('ul#controls').remove();
+}
+
+function init_toca(){
   initial_servers();
   set_actions();
 
@@ -94,9 +128,12 @@ function init(){
 
   $('a#create_playlist').click(make_playlist)
   $('a#clear_playlist').click(function(){$('tr.song').remove()})
+
+  $('a.play').click(play)
+
 }
 
-$(init)
+$(init_toca)
 
 
 
