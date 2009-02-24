@@ -2,7 +2,6 @@ sort_playlist = true
 
 function set_actions(){
   $('#mp3s a.dir2playlist').click(function(){
-<<<<<<< HEAD:public/toca.js
     server = $(this).parents('ul.file_tree').attr('rel')
     $(this).next('ul').find('span.song').each(function() {
       song = $(this).attr('id')
@@ -18,14 +17,6 @@ function set_actions(){
 
     return(false);
   }).removeClass('song2playlist')  
-
-=======
-    $(this).next('ul').find('span.song').each(function() {
-      add_song($(this).attr('id'))
-    })
-    return(false);
-  }).removeClass('a.dir2playlist')
->>>>>>> f418ef39016a8f76f5dbc080545751689c9cc505:public/toca.js
 
   $('a.delete').click(function(){
       $(this).parents('tr').remove();
@@ -44,13 +35,8 @@ function set_actions(){
         $(item).remove()
         set_actions();
       })
-<<<<<<< HEAD:public/toca.js
     $(this).click(function(){});
     return(false)
-=======
-    return(false)
-    $(this).click();
->>>>>>> f418ef39016a8f76f5dbc080545751689c9cc505:public/toca.js
   }).removeClass('lazyload')
 
 }
@@ -65,7 +51,6 @@ function update_playlist(){
     }
 }
 
-<<<<<<< HEAD:public/toca.js
 function add_song(server,song){
   $.getJSON('http://' + server + '/playlist_song/' + song + '?jsoncallback=?',
       function(data){
@@ -91,44 +76,6 @@ function initial_servers(){
 }
 
 function init(){
-=======
-function add_song(song){
-  $.ajax({
-    url: '/playlist_song/' + song,
-    success: function(html){
-      $('table#songs').append(html)
-      update_playlist();
-      set_actions();
-    }
-   })
-}
-
-function get_tree(sever, dir){
-}
-
-function initial_servers(){
-
-  $(servers).each(function(){
-    $.getJSON('http://' + this + '/tree/?jsoncallback=?',function(data){
-        html = data.data;
-        server = data.server;
-        new_tree = $("<ul class='file_tree' rel='" + server + "'>" + html + "</ul>").treeview();
-        alert(new_tree.attr('rel'))
-        $('#mp3s').append(new_tree);
-        set_actions();
-     })
-  })
-
-}
-
-function init(){
-  $('#mp3s  span.song').click(function(){
-    add_song($(this).attr('id'))
-
-    return(false);
-  })  
-
->>>>>>> f418ef39016a8f76f5dbc080545751689c9cc505:public/toca.js
   initial_servers();
   set_actions();
 
