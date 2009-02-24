@@ -14,6 +14,6 @@
      
     - files.each do |file|
       %li
-        %span.file.song{:id => file}
+        %span.file.song.song2playlist{:id => file}
           = File.basename(file)
         %a{:href => '/song/' + file} play

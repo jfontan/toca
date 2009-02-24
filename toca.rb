@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'lib/toca'
+require 'json'
 
 gem 'chriseppstein-compass', '~> 0.4'
 require 'compass'
@@ -13,10 +14,15 @@ configure do
 end
  
 
-$mp3dir = ARGV[0] 
+$mp3dir = ARGV[0]
 
 $host = "hoop.esi.ucm.es"
 $port = Sinatra::Application::port
+$server = "#{$host}:#{$port}"
+
+$servers = []
+$servers << %w(80.24.45.68:1984)
+$servers << $server unless $servers.include? $server
 
 def playlist_song(song)
   haml :_playlist_song, :locals => {:song => song, :info => ID3::get(song)}, :layout => false
@@ -38,19 +44,31 @@ def check_file(file)
 end
 
 get '/' do
-  @servers = ["#{$host}s:#{$port}"]
   haml :index
 end
 
 get '/tree/*' do
   dir = params[:splat].first || nil
   dir = nil unless dir =~ /./
-  tree_song(dir)
+  html = tree_song(dir)
+  if params[:jsoncallback]
+    content_type 'text/json', :charset => 'utf-8'
+    params[:jsoncallback] + '(' + {:data => [html], :server => $server}.to_json + ')'
+  else
+    html
+  end
 end
 
 get '/playlist_song/*' do
   f = params[:splat].first
-  playlist_song(f)
+  html = playlist_song(f)
+  if params[:jsoncallback]
+    content_type 'text/json', :charset => 'utf-8'
+    params[:jsoncallback] + '(' + {:data => [html], :server => $server}.to_json + ')'
+  else
+    html
+  end
+
 end
 
 post '/' do

@@ -2,11 +2,22 @@ sort_playlist = true
 
 function set_actions(){
   $('#mp3s a.dir2playlist').click(function(){
+    server = $(this).parents('ul.file_tree').attr('rel')
     $(this).next('ul').find('span.song').each(function() {
-      add_song($(this).attr('id'))
+      song = $(this).attr('id')
+      add_song(server,song)
     })
     return(false);
-  }).removeClass('a.dir2playlist')
+  }).removeClass('dir2playlist')
+
+  $('#mp3s  span.song2playlist').click(function(){
+    song = $(this).attr('id')
+    server = $(this).parents('ul.file_tree').attr('rel')
+    add_song(server, song)
+
+    return(false);
+  }).removeClass('song2playlist')  
+
 
   $('a.delete').click(function(){
       $(this).parents('tr').remove();
@@ -17,15 +28,16 @@ function set_actions(){
     server = $(this).parents('ul.file_tree').attr('rel')
     dir = $(this).attr('rel')
     item = this
-    $.ajax({
-      url : 'http://' + server + '/tree/' + dir,
-      success: function(html){
-        var new_item = $(html).insertBefore(item)
+    $.getJSON('http://' + server + '/tree/' + dir + '?jsoncallback=?',
+      function(data){
+        html = data.data;
+        var new_item = $(""+html+"").insertBefore($(item))
         $(item).parents('ul.file_tree').treeview({ add: new_item });
         $(item).remove()
         set_actions();
-      }
-     })
+      })
+    $(this).click(function(){});
+    return(false)
   }).removeClass('lazyload')
 
 }
@@ -40,43 +52,31 @@ function update_playlist(){
     }
 }
 
-function add_song(song){
-  $.ajax({
-    url: '/playlist_song/' + song,
-    success: function(html){
-      $('table#songs').append(html)
-      update_playlist();
-      set_actions();
-    }
-   })
-}
-
-function get_tree(sever, dir){
+function add_song(server,song){
+  $.getJSON('http://' + server + '/playlist_song/' + song + '?jsoncallback=?',
+      function(data){
+        html = data.data;
+        $('table#songs tbody').append($("" + html + ""))
+        update_playlist();
+        set_actions();
+      })
 }
 
 function initial_servers(){
 
   $(servers).each(function(){
-    server = this;
-    $.ajax({
-      url : 'http://' + this + '/tree/',
-      success: function(html){
+    $.getJSON('http://' + this + '/tree/?jsoncallback=?',function(data){
+        html = data.data;
+        server = data.server;
         new_tree = $("<ul class='file_tree' rel='" + server + "'>" + html + "</ul>").treeview();
         $('#mp3s').append(new_tree);
         set_actions();
-      }
      })
   })
 
 }
 
 function init(){
-  $('#mp3s  span.song').click(function(){
-    add_song($(this).attr('id'))
-
-    return(false);
-  })  
-
   initial_servers();
   set_actions();
 
