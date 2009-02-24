@@ -1,4 +1,4 @@
-%tr.song{:id => song}
+%tr.song{:id => song, :rel => $server}
   %td.file
     %a.delete{:href => '#'} del
     = File.basename(song) 

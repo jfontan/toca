@@ -13,27 +13,19 @@ configure do
   end
 end
  
+config = YAML::load(File.open('conf/conf.yaml'))
 
-$mp3dir = ARGV[0]
-
-$host = "80.24.45.68"
-$port = Sinatra::Application::port
-$server = "#{$host}:#{$port}"
-
-$servers = []
-$servers << %w(80.24.45.68:1984)
+$mp3dir = config[:mp3dir]
+$server = config[:server]
+$servers = config[:syndication] 
 $servers << $server unless $servers.include? $server
-
-$servers = []
-$servers << "#{$host}:#{$port}" unless $servers.include? "#{$host}:#{$port}"
-$servers << %w(80.24.45.68:1984)
 
 def playlist_song(song)
   haml :_playlist_song, :locals => {:song => song, :info => ID3::get(song)}, :layout => false
 end
 
 def tree_song(dir = nil)
-  haml :_tree_song, :locals => {:name => dir || "#{$host}:#{$port}", :info => Files.file_tree(dir || $mp3dir )}, :layout => false
+  haml :_tree_song, :locals => {:name => dir || $server , :info => Files.file_tree(dir || $mp3dir )}, :layout => false
 end
 
 
@@ -105,7 +97,7 @@ get '/playlist/' do
   out = "#EXTM3U\n"
   songs.each{|f|
     out += "#EXTINF, #{File.basename(f)}\n"
-    out += "http://#{$host}:#{$port}/song/" + f + "\n"
+    out += "http://#{$server}/song/" + f + "\n"
   }
 
   out

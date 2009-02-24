@@ -75,23 +75,27 @@ function initial_servers(){
 
 }
 
+function make_playlist(){
+    playlist = "#EXTM3U\n";
+    $('tr.song').each(function(){
+      song = $(this).attr("id")
+      server = $(this).attr("rel")
+      playlist += "#EXTINF, " + song + "\n"
+      playlist += "http://" + server + "/song/" + song + "\n"
+    })
+    window.open(dataUrl(playlist,'audio/mpegurl'));  
+    return(false);
+}
 function init(){
   initial_servers();
   set_actions();
 
   $('ul.file_tree').treeview();
 
-  $('a#create_playlist').click(function(){
-    songs = ""
-    $('#playlist tr.song').each(function(){
-      songs += $(this).attr('id') + '|'
-    })
-    window.location = '/playlist/?songs=' + songs
-    return(false);
-  });
-
+  $('a#create_playlist').click(make_playlist)
 }
 
 $(init)
+
 
 
