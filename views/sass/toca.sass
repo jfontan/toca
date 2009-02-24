@@ -22,7 +22,10 @@ body
 
   #playlist
     +column(!playlist_witdh,"last")
+    table
+      +span(!playlist_witdh - 1)
     :height = !div_size
+    :overflow auto
 
     ul
       :list-style none

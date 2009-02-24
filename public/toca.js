@@ -93,6 +93,7 @@ function init(){
   $('ul.file_tree').treeview();
 
   $('a#create_playlist').click(make_playlist)
+  $('a#clear_playlist').click(function(){$('tr.song').remove()})
 }
 
 $(init)
