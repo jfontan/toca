@@ -16,13 +16,17 @@ end
 
 $mp3dir = ARGV[0]
 
-$host = "hoop.esi.ucm.es"
+$host = "80.24.45.68"
 $port = Sinatra::Application::port
 $server = "#{$host}:#{$port}"
 
 $servers = []
 $servers << %w(80.24.45.68:1984)
 $servers << $server unless $servers.include? $server
+
+$servers = []
+$servers << "#{$host}:#{$port}" unless $servers.include? "#{$host}:#{$port}"
+$servers << %w(80.24.45.68:1984)
 
 def playlist_song(song)
   haml :_playlist_song, :locals => {:song => song, :info => ID3::get(song)}, :layout => false
