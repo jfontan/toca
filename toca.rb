@@ -35,7 +35,6 @@ def tree_song(dir = nil)
   haml :_tree_song, :locals => {:name => dir || $server , :info => Files.file_tree(dir || $mp3dir )}, :layout => false
 end
 
-
 def tree_song_tabs_dir(dir = nil)
   html=haml :_tree_song_tabs, :locals => {:name => dir, :info => Files.file_tree(dir)}, :layout => false
 end
@@ -88,6 +87,22 @@ end
 get '/song_info_tab/*' do
   f = params[:splat].first
   song_info_tab(f)
+end
+
+get '/song_image/*' do
+  f = params[:splat].first
+  image=ID3::get_image(f)
+    
+  if image
+    puts "there's image"
+    puts image[:mimetype]
+    content_type image[:mimetype]
+    image[:data]
+  else
+    puts "no image"
+    "lero"
+  end
+  
 end
 
 post '/' do

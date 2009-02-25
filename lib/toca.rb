@@ -42,7 +42,11 @@ module ID3
       :track => tag.track,
     }
   end
-
+  
+  def self.get_image(file)
+    ID3Lib::Tag.new(file).frame(:APIC)
+  end
+  
 end
 
 if __FILE__ == $0
