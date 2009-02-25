@@ -89,83 +89,22 @@ function make_playlist(){
 function init_finder(){
   $('#tags').finder({
     title : 'Find the song',
-    onRootReady: function(rootList,finderObj){
-      debug('Root ready',arguments)
-    },
-    onInit : function(finderObj) {
-      
-      debug('Finder initialised',arguments)
-      
-      $('.ui-finder-action-refresh').click(function() {
-        $('[name="refresh"]').click();
-      });
-      
-      
-      $('.ui-finder-action-open').click(function(){
-        $('[name="select"]').click();
-      });
+    onItemSelect : function(listItem,eventTarget,finderObject){
+        var anchor = $('a',listItem);
+        var href = anchor.attr('rel');
 
-      $('.ui-finder-action-current').click(function(){
-        $('[name="getCurrent"]').click();
-      });
-
-      $('.ui-finder-action-destroy').click(function(){
-        $('[name="createFinder"]').click();
-      });
-
-    },
-    onItemSelect : function(listItem,eventTarget,finderObject){     
-      var anchor = $('a',listItem),
-        href = anchor.attr('rel');
-      
-    // Debug is a function specified in Finder script for debugging purposes
-    // Remove it if unnecessary
-      debug('onItemSelect - URL: ',href)
-    
-    // By returning false, the url specified is not fetched
-    // ie. Do not display new column if selected item is not an image
-      //if(href.indexOf('.jpg') == -1) {return false;}
-      
-    },
-    onFolderSelect : function(listItem,eventTarget,finderObject){
-      var anchor = $('a',listItem),
-        href = anchor.attr('rel');
+        // Debug is a function specified in Finder script for debugging purposes
+        // Remove it if unnecessary
+        debug('onItemSelect - URL: ',href);
         
-      debug('onFolderSelect - URL: ',href)
-    },
-    onItemOpen : function(listItem,newColumn,finderObject){
-      var anchor = $('a',listItem),
-        href = anchor.attr('href');
-      
-      debug('onItemOpen - Column source: ',newColumn.attr('data-finder-list-source'))
+        if(eventTarget.attr('class')=='add_song'){
+          add_song('127.0.0.1:4567', href);
+        }
 
-    },
-    onFolderOpen : function(listItem,newColumn,finderObject){
-      var anchor = $('a',listItem),
-        href = anchor.attr('href');
-      
-      debug('onFolderOpen - Column source: ',newColumn.attr('data-finder-list-source'))
-    }
-    /*
-    ,
-    toolbarActions : function() {
-      return '\
-      <div class="ui-finder-button ui-state-default ui-corner-right ui-finder-action-refresh" title="Refresh">\
-        <span class="ui-icon ui-icon-refresh"/>\
-      </div>\
-      <div class="ui-finder-button ui-state-default ui-finder-action-open" title="Open ..">\
-        <span class="ui-icon ui-icon-folder-open"/>\
-      </div>\
-      <div class="ui-finder-button ui-state-default ui-finder-action-current ui-corner-left" title="Get current">\
-        <span class="ui-icon ui-icon-help"/>\
-      </div>\
-      <div class="ui-finder-button ui-state-default ui-finder-action-destroy ui-corner-all" title="Destroy">\
-        <span class="ui-icon ui-icon-closethick"/>\
-      </div>\
-      ';
-    */
-     
-    
+        // By returning false, the url specified is not fetched
+        // ie. Do not display new column if selected item is not an image
+        if(href.indexOf('.jpg') == -1) {return false;}
+      }
   });
 }
 
