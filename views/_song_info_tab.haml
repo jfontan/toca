@@ -1,6 +1,6 @@
-%i= File.basename(song) 
+%i{ :style => 'color:#ccc' }= File.basename(song) 
 %h1= info[:title]
-%h2= info[:artist]
-%h2= info[:album]
+%h2{ :style => 'color:#999' }= info[:artist]
+%h2{ :style => 'color:#666'}= info[:album]
 %h3
   %i= info[:track]
