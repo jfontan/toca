@@ -91,7 +91,7 @@ function init_finder(){
     title : 'Find the song',
     onItemSelect : function(listItem,eventTarget,finderObject){
         var anchor = $('a',listItem);
-        var href = anchor.attr('rel');
+        var href = anchor.attr('title');
 
         // Debug is a function specified in Finder script for debugging purposes
         // Remove it if unnecessary
