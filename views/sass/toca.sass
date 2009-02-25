@@ -3,7 +3,7 @@
 !div_size = "800px"
 
 !total_width = 39
-!mp3_width   = 10
+!mp3_width   = 15
 !playlist_witdh = !total_width - !mp3_width - 1
 
 body
@@ -13,8 +13,9 @@ body
 #main 
   +container()
   +span(!total_width)
+
   #mp3s
-    +column(!mp3_width)
+    +column(!mp3_width - 1)
     +colborder()
     :height = !div_size
     :overflow auto
@@ -43,3 +44,6 @@ table#songs
   tr.current
     td
       :background-color green
+
+.ui-finder
+  +span(!mp3_width - 2)

@@ -1,7 +1,7 @@
 sort_playlist = true
 
 function set_actions(){
-  $('#mp3s a.dir2playlist').click(function(){
+  $('#treeview a.dir2playlist').click(function(){
     server = $(this).parents('ul.file_tree').attr('rel')
     $(this).next('ul').find('span.song').each(function() {
       song = $(this).attr('id')
@@ -10,7 +10,7 @@ function set_actions(){
     return(false);
   }).removeClass('dir2playlist')
 
-  $('#mp3s  span.song2playlist').click(function(){
+  $('#treeview  span.song2playlist').click(function(){
     song = $(this).attr('id')
     server = $(this).parents('ul.file_tree').attr('rel')
     add_song(server, song)
@@ -67,7 +67,7 @@ function initial_servers(){
         html = data.data;
         server = data.server;
         new_tree = $("<ul class='file_tree' rel='" + server + "'>" + html + "</ul>").treeview();
-        $('#mp3s').append(new_tree);
+        $('#treeview').append(new_tree);
         set_actions();
      })
   })

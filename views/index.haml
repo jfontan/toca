@@ -2,12 +2,14 @@
   :javascript 
     eval('servers = #{$servers.to_json};')
 
-  %ol#tags{:rel => $server}
-    %li.ui-finder-folder
-      %a Music
-      =tree_song_tabs_dir($mp3dir)
-
   #mp3s
+    #tabed
+      %ol#tags{:rel => $server}
+        %li.ui-finder-folder
+          %a Music
+          =tree_song_tabs_dir($mp3dir)
+
+    #treeview
 
   #playlist
     %a#create_playlist{:href => '#'} playlist
