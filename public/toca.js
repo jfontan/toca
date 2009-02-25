@@ -120,30 +120,90 @@ function playlist(){
       list.push("/song/" + song)
     })
 
-    return(list.reverse())
+    return(list)
+}
+
+var song = null;
+var current = 0;
+
+function update_current(){
+    $('table#songs tbody').find('tr').removeClass('current');
+    $('table#songs tbody').find('tr:eq(' + current + ')').addClass('current');
+}
+
+function get_current(){
+    var current = 0;
+    $('table#songs tbody').find('tr').each(function(){
+       if ($(this).attr('class').match('current'))
+            return(false);
+       current += 1;
+    });
+
+    return(current);
 }
 
 function play(){
     list = playlist();
-    song = list.pop();
-    try{
-    var song = soundManager.createSound({
-        id: song,
-        url: song,
-        volume: 50
-        });
-    }catch(e){
-        alert(e)
+    if (list.length > 0){
+        if (current > list.length)
+            current = 0
+        update_current();
+        song = list[current];
+        try{
+            soundManager.destroySound('Player');
+        }catch(e){}
+        try{
+            song = soundManager.createSound({
+                id: 'Player',
+                url: song,
+                volume: 50,
+                onfinish: next
+                });
+            song.play();
+        }catch(e){
+            alert(e)
+        }
     }
-    song.play();
 
     return(false);
 }
 
-soundManager.onerror = function(){
-    $('ul#controls').find().remove();
-    $('ul#controls').remove();
+function stop(){
+    if (song != null){
+        song.stop();
+        song = null;
+    }
+    return(false);
 }
+
+function next(){
+    current = get_current() + 1;
+    update_current();
+    play();
+    return(false);
+}
+
+function prev(){
+    current = get_current() - 1;
+    update_current();
+    play();
+    return(false);
+}
+
+function init_soundmanager(){
+
+    soundManager.onerror = function(){
+        $('ul#controls').find().remove();
+        $('ul#controls').remove();
+    }
+
+    $('a.play').click(play)
+    $('a.stop').click(stop)
+    $('a.next').click(next)
+    $('a.prev').click(prev)
+}
+
+
 
 function init_toca(){
   initial_servers();
@@ -155,8 +215,8 @@ function init_toca(){
   $('a#clear_playlist').click(function(){$('tr.song').remove()})
   
   init_finder();
+  init_soundmanager();
   
-  $('a.play').click(play)
 }
 
 $(init_toca)
