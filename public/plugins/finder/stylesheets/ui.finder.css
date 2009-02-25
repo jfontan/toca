@@ -26,7 +26,7 @@
 .ui-finder .ui-finder-column .ui-finder-list-item div{display:none;}
 .ui-finder .ui-finder-column .ui-finder-list-item > a{text-decoration:none;cursor:pointer;display:inline-block;outline:none;position:relative;padding:0 0 0 25px;}
 .ui-finder .ui-finder-column .ui-finder-list-item:hover > a{text-decoration:underline;}
-.ui-finder .ui-finder-column .ui-finder-list-item.ui-finder-loading{background-image:url(loading.gif);background-repeat:no-repeat;background-position:right center !important;}
+.ui-finder .ui-finder-column .ui-finder-list-item.ui-finder-loading{background-image:url(/plugins/finder/images/loading.gif);background-repeat:no-repeat;background-position:right center !important;}
 .ui-finder-list-item.ui-finder-loading .ui-finder-icon-arrow,
 .ui-finder-file .ui-finder-icon-arrow,
 .ui-finder-list-item-file .ui-finder-icon-arrow{visibility:hidden;}
