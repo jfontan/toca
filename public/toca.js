@@ -18,6 +18,14 @@ function set_actions(){
     return(false);
   }).removeClass('song2playlist')  
 
+  $('a.play').click(function(){
+      $(this).parents('tr').siblings().removeClass('current');
+      $(this).parents('tr').addClass('current');
+      current = get_current();
+      play();
+      return(false);
+    });
+
   $('a.delete').click(function(){
       $(this).parents('tr').remove();
       return(false);
