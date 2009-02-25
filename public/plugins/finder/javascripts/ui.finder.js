@@ -471,18 +471,25 @@ $.fn.finder = function(o,m){
 		}
 	// No data yet, so retrieve from URL	
 		else if(!url.match(/_blank\d+/)) {
-			$.ajax({
-				url : url, cache : self.settings.ajax.cache,
-				success: function(response){
-					data = response;
-				},
-				error: function(xhr,response){
-					data = response;
-				},
-				complete : function(){
-					proceed();
-				}
-			});
+//			$.ajax({
+//				url : url, cache : self.settings.ajax.cache,
+//				success: function(response){
+//					data = response;
+//				},
+//				error: function(xhr,response){
+//					data = response;
+//				},
+//				complete : function(){
+//					proceed();
+//				}
+//			});
+//
+//			JSONP Version. Miguel Vazquez Garcia Feb 25 2009
+
+            $.getJSON(url + '?jsoncallback=?', function(response){
+               data = $("" + response.data + "");
+               proceed();
+            })
 		}
 
 		return this;

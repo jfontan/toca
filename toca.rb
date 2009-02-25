@@ -69,7 +69,14 @@ end
 get '/tree_tabs_dir/*' do
   dir = params[:splat].first || nil
   dir = nil unless dir =~ /./
-  tree_song_tabs_dir(dir)
+  html = tree_song_tabs_dir(dir)
+  if params[:jsoncallback]
+    content_type 'text/json', :charset => 'utf-8'
+    params[:jsoncallback] + '(' + {:data => [html], :server => $server}.to_json + ')'
+  else
+    html
+  end
+
 end
 
 
@@ -86,7 +93,13 @@ end
 
 get '/song_info_tab/*' do
   f = params[:splat].first
-  song_info_tab(f)
+  html = song_info_tab(f)
+  if params[:jsoncallback]
+    content_type 'text/json', :charset => 'utf-8'
+    params[:jsoncallback] + '(' + {:data => [html], :server => $server}.to_json + ')'
+  else
+    html
+  end
 end
 
 get '/song_image/*' do
