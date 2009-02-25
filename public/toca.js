@@ -93,12 +93,13 @@ function init_finder(){
         var anchor = $('a',listItem);
         var href = anchor.attr('title');
 
+        server = $(this).attr('rel')
         // Debug is a function specified in Finder script for debugging purposes
         // Remove it if unnecessary
         debug('onItemSelect - URL: ',href);
         
         if(eventTarget.attr('class')=='add_song'){
-          add_song('lobezno.dacya.ucm.es:4567', href);
+          add_song(server, href);
           return false;
         }
 
