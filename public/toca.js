@@ -117,8 +117,8 @@ function playlist(){
     $('tr.song').each(function(){
       song = $(this).attr("id")
       server = $(this).attr("rel")
-      //list.push("http://" + server + "/song/" + song)
-      list.push("/song/" + song)
+      list.push("http://" + server + "/song/" + song)
+      //list.push("/song/" + song)
     })
 
     return(list)
