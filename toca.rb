@@ -96,7 +96,11 @@ get '/song_image/*' do
   if image
     puts "there's image"
     puts image[:mimetype]
-    content_type image[:mimetype]
+    type=image[:mimetype]
+    
+    type="image/"+image[:imageformat].downcase if type.empty?
+      
+    content_type type
     image[:data]
   else
     puts "no image"
