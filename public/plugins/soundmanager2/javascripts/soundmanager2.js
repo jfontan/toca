@@ -154,7 +154,9 @@ function SoundManager(smURL,smID) {
       _s.features.movieStar = false;
     }
     _s.filePattern = _s.filePatterns[(_s.flashVersion!=8?'flash9':'flash8')];
-    _s.movieURL = (_s.flashVersion==8?'soundmanager2.swf':'soundmanager2_flash9.swf');
+
+    // Path to swf added by Miguel Vazquez. Feb 25 2009
+    _s.movieURL = '/plugins/soundmanager2/swf/' + (_s.flashVersion==8?'soundmanager2.swf':'soundmanager2_flash9.swf');
     _s.features.peakData = _s.features.waveformData = _s.features.eqData = (_s.flashVersion==9);
   };
 

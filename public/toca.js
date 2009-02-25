@@ -135,7 +135,7 @@ function play(){
     }catch(e){
         alert(e)
     }
-//    song.play();
+    song.play();
 
     return(false);
 }
