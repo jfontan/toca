@@ -1,6 +1,9 @@
 toca=/$PWD CD=/$PWD/ filter="*.rb *.sass *.haml *.textile *.js" {
  README.textile
  toca.rb
+ conf=conf{
+  conf.yaml
+ }
  lib=lib{
   toca.rb
  }
@@ -15,5 +18,6 @@ toca=/$PWD CD=/$PWD/ filter="*.rb *.sass *.haml *.textile *.js" {
  }
  public=public {
   toca.js
+  dataUrl.js
  }
 }
