@@ -98,12 +98,15 @@ function init_finder(){
         debug('onItemSelect - URL: ',href);
         
         if(eventTarget.attr('class')=='add_song'){
-          add_song('127.0.0.1:4567', href);
+          add_song('lobezno.dacya.ucm.es:4567', href);
+          return false;
         }
 
         // By returning false, the url specified is not fetched
         // ie. Do not display new column if selected item is not an image
-        if(href.indexOf('.jpg') == -1) {return false;}
+        //if(href.indexOf('.jpg') == -1) {return false;}
+        
+        return true;
       }
   });
 }

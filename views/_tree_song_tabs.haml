@@ -9,5 +9,5 @@
    
   - files.each do |file|
     %li.ui-finder-file
-      %a{:href => file}= File.basename(file)
+      %a{:href => "/song_info_tab/#{file}", :title => file}= File.basename(file)
       %img.add_song{ :src => "/images/add.png", :align => "right" }

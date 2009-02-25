@@ -27,6 +27,10 @@ def playlist_song(song)
   haml :_playlist_song, :locals => {:song => song, :info => ID3::get(song)}, :layout => false
 end
 
+def song_info_tab(song)
+  haml :_song_info_tab, :locals => {:song => song, :info => ID3::get(song)}, :layout => false
+end
+
 def tree_song(dir = nil)
   haml :_tree_song, :locals => {:name => dir || $server , :info => Files.file_tree(dir || $mp3dir )}, :layout => false
 end
@@ -79,7 +83,11 @@ get '/playlist_song/*' do
   else
     html
   end
+end
 
+get '/song_info_tab/*' do
+  f = params[:splat].first
+  song_info_tab(f)
 end
 
 post '/' do
