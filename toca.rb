@@ -2,6 +2,9 @@ require 'rubygems'
 require 'sinatra'
 require 'lib/toca'
 require 'json'
+require 'yaml'
+require 'haml'
+require 'pp'
 
 gem 'chriseppstein-compass', '~> 0.4'
 require 'compass'
@@ -26,6 +29,11 @@ end
 
 def tree_song(dir = nil)
   haml :_tree_song, :locals => {:name => dir || $server , :info => Files.file_tree(dir || $mp3dir )}, :layout => false
+end
+
+
+def tree_song_tabs_dir(dir = nil)
+  html=haml :_tree_song_tabs, :locals => {:name => dir, :info => Files.file_tree(dir)}, :layout => false
 end
 
 
@@ -54,6 +62,13 @@ get '/tree/*' do
     html
   end
 end
+
+get '/tree_tabs_dir/*' do
+  dir = params[:splat].first || nil
+  dir = nil unless dir =~ /./
+  tree_song_tabs_dir(dir)
+end
+
 
 get '/playlist_song/*' do
   f = params[:splat].first

@@ -1,0 +1,10 @@
+- directories = info[:directories]
+- files = info[:files]
+%ul
+  - directories.each do |subdir|
+    %li.ui-finder-folder{:rel => subdir}
+      %a{ :href => "/tree_tabs_dir/#{subdir}"}= File.basename(subdir)
+   
+  - files.each do |file|
+    %li.ui-finder-file
+      %a{:href => file}= File.basename(file)

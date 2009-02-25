@@ -2,6 +2,11 @@
   :javascript 
     eval('servers = #{$servers.to_json};')
 
+  %ol#tags
+    %li.ui-finder-folder
+      %a Music
+      =tree_song_tabs_dir('/Users/jfontan/Music')
+
   #mp3s
 
   #playlist
