@@ -28,8 +28,13 @@ body
     :height = !div_size
     :overflow auto
 
-    ul
-      :list-style none
+    ul#controls
+      :list-style-type none
+      li
+        :border 1px solid
+        :margin 1px 
+        :padding 1px 
+        :display inline
 
 table#songs
   +span(!playlist_witdh )
@@ -47,3 +52,5 @@ table#songs
 
 .ui-finder
   +span(!mp3_width - 2)
+
+

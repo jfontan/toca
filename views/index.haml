@@ -14,6 +14,7 @@
   #playlist
     %a#create_playlist{:href => '#'} playlist
     %a#clear_playlist{:href => '#'} clear
+    = haml :_controls, :layout => false
     %table#songs.tablesorter
       %thead
         %tr
@@ -23,6 +24,5 @@
           %th Album
           %th Track
       %tbody
-    = haml :_controls, :layout => false
 
 
