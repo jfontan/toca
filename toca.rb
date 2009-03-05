@@ -6,6 +6,8 @@ require 'yaml'
 require 'haml'
 require 'pp'
 
+#{{{ Compass
+
 gem 'chriseppstein-compass', '~> 0.4'
 require 'compass'
  
@@ -15,7 +17,17 @@ configure do
     config.sass_dir = File.join('views', 'sass')
   end
 end
- 
+
+get '/toca.css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :"sass/toca", :sass => Compass.sass_engine_options
+end
+
+
+
+
+#{{{ Config 
+
 config = YAML::load(File.open('conf/conf.yaml'))
 
 $mp3dir = config[:mp3dir]
@@ -23,137 +35,75 @@ $server = config[:server]
 $servers = config[:syndication] 
 $servers << $server unless $servers.include? $server
 
-def playlist_song(song)
-  haml :_playlist_song, :locals => {:song => song, :info => ID3::get(song)}, :layout => false
-end
-
-def song_info_tab(song)
-  haml :_song_info_tab, :locals => {:song => song, :info => ID3::get(song)}, :layout => false
-end
-
-def tree_song(dir = nil)
-  haml :_tree_song, :locals => {:name => dir || $server , :info => Files.file_tree(dir || $mp3dir )}, :layout => false
-end
-
-def tree_song_tabs_dir(dir = nil)
-  html=haml :_tree_song_tabs, :locals => {:name => dir, :info => Files.file_tree(dir)}, :layout => false
-end
 
 
-def check_file(file) 
+
+
+
+#{{{ Helpers
+
+def check_path(file)
   dir = File.expand_path(File.dirname(file))
   if dir !~ /^#{ File.expand_path($mp3dir) }/
-    return false
+    raise "Path invalid"
   else
     return true
   end
-
 end
+
+
+def jasonp(html)
+  if params[:jsoncallback]
+    content_type 'text/json'
+    begin
+      params[:jsoncallback] + '(' + {:html => [html], :server => $server}.to_json + ')'
+    rescue
+      params[:jsoncallback] + '(' + {:html => [html.to_utf8], :server => $server}.to_json + ')'
+    end
+
+  else
+    html
+  end
+end
+
+#{{{ Controlers
 
 get '/' do
   haml :index
 end
 
-get '/tree/*' do
-  dir = params[:splat].first || nil
-  dir = nil unless dir =~ /./
-  html = tree_song(dir)
-  if params[:jsoncallback]
-    content_type 'text/json', :charset => 'utf-8'
-    params[:jsoncallback] + '(' + {:data => [html], :server => $server}.to_json + ')'
-  else
-    html
-  end
-end
+get '/directory' do
 
-get '/tree_tabs_dir/*' do
-  dir = params[:splat].first || nil
-  dir = nil unless dir =~ /./
-  html = tree_song_tabs_dir(dir)
-  if params[:jsoncallback]
-    content_type 'text/json', :charset => 'utf-8'
-    params[:jsoncallback] + '(' + {:data => [html], :server => $server}.to_json + ')'
-  else
-    html
-  end
+  name = params[:name]
+  name = $mp3dir if name == "Top"
+  check_path(name)
 
-end
+  info = Finder.file_tree(name)
+  info[:first] = true if name == $mp3dir
 
+  html = haml :_directory, :layout => false, :locals => {:info => info}
 
-get '/playlist_song/*' do
-  f = params[:splat].first
-  html = playlist_song(f)
-  if params[:jsoncallback]
-    content_type 'text/json', :charset => 'utf-8'
-    params[:jsoncallback] + '(' + {:data => [html], :server => $server}.to_json + ')'
-  else
-    html
-  end
-end
-
-get '/song_info_tab/*' do
-  f = params[:splat].first
-  html = song_info_tab(f)
-  if params[:jsoncallback]
-    content_type 'text/json', :charset => 'utf-8'
-    params[:jsoncallback] + '(' + {:data => [html], :server => $server}.to_json + ')'
-  else
-    html
-  end
-end
-
-get '/song_image/*' do
-  f = params[:splat].first
-  image=ID3::get_image(f)
-    
-  if image
-    puts "there's image"
-    puts image[:mimetype]
-    type=image[:mimetype]
-    
-    type="image/"+image[:imageformat].downcase if type.empty?
-      
-    content_type type
-    image[:data]
-  else
-    puts "no image"
-    "lero"
-  end
   
+  jasonp(html)
 end
 
-post '/' do
-  files = params[:files]
-  puts files.join("\n")
+get '/song' do
+  name = params[:name]
+  check_path(name)
+
+  content_type 'audio/mpeg'
+  File.open(name).read
 end
 
-get '/toca.css' do
-  content_type 'text/css', :charset => 'utf-8'
-  sass :"sass/toca", :sass => Compass.sass_engine_options
+get '/playlist_song' do
+  name = params[:name]
+  check_path(name)
+
+  info =  ID3::get(name)
+  html = haml :_playlist_song, :layout => false, :locals => {:song =>  name, :info => info}
+
+  jasonp(html)
 end
 
-get '/song/*' do
-
-  file = params[:splat].first
-  if check_file(file)
-    content_type 'audio/mpeg'
-    File.open(file).read
-  else
-    "Error: Path not permited"
-  end
-end
-
-get '/playlist/' do
-  content_type 'audio/x-mpegurl'
-
-  songs = params[:songs].split(/\|/).select{|f| f =~ /./}
 
 
-  out = "#EXTM3U\n"
-  songs.each{|f|
-    out += "#EXTINF, #{File.basename(f)}\n"
-    out += "http://#{$server}/song/" + f + "\n"
-  }
-
-  out
-end

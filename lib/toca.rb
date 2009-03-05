@@ -1,26 +1,39 @@
 require 'id3lib'
+require 'iconv' 
 
-module Files
+class String
+  def to_utf8
+    Iconv.conv('utf-8','ISO-8859-1',  self)
+  end
+end
 
+
+
+module Finder
   def self.has_music?(directory, filter = '.*mp3$')
     Dir.glob(directory + '/*').each{|f|
       if File.directory? f
-        return true if Files.has_music? f
+        return true if has_music? f
       elsif f =~ /#{filter}/
         return true
       end
     }
+    return false
   end
 
-  def self.file_tree(directory, filter = '.*mp3$')
+
+  def self.file_tree(directory, levels = 1, filter = '.*mp3$')
+    return directory if levels <= 0
+
     tree = {
+      :name => directory,
       :files => [], 
       :directories => []
     }
 
-    Dir.glob(directory + '/*').each{|f|
+    Dir.glob(File.join(directory, '*')).each{|f|
       if File.directory? f
-        tree[:directories] << f if Files.has_music? f
+        tree[:directories] << file_tree(f, levels - 1, filter) if has_music? f
       elsif f =~ /#{filter}/
         tree[:files] << f
       end
@@ -28,7 +41,6 @@ module Files
 
     tree
   end
-
 end
 
 module ID3
@@ -51,7 +63,6 @@ end
 
 if __FILE__ == $0
 
-  p Files::file_tree('/home/miki/downloads/mp3')
-  p ID3.get('/home/miki/downloads/mp3//ox - american lo fi/Ox - [11] Awkward Beauty.mp3')
+  p Finder::file_tree('/home/miki/downloads/mp3', 2)
 
 end

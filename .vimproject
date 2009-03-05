@@ -8,18 +8,19 @@ toca=/$PWD CD=/$PWD/ filter="*.rb *.sass *.haml *.textile *.js" {
   toca.rb
  }
  views=views {
-  _controls.haml
+  _finder.haml
+  _directory.haml
+  
+  _player.haml
   _playlist_song.haml
-  _song_info_tab.haml
-  _tree_song.haml
-  _tree_song_tabs.haml
+  
   index.haml
   layout.haml
   sass=sass {
    toca.sass
   }
  }
- public=public {
+ javascripts=public/javascripts {
   toca.js
  }
 }

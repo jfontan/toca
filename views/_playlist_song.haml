@@ -1,7 +1,7 @@
-%tr.song{:id => song, :rel => $server}
+%tr.playlistsong{:id => song, :rel => $server}
   %td.file
-    %a.play{:href => '#'} play
-    %a.delete{:href => '#'} del
+    %a.set_current{:href => '#'} play
+    %a.delete_playlistsong{:href => '#'} del
     = File.basename(song) 
   %td.title= info[:title]
   %td.artist= info[:artist]

@@ -2,31 +2,37 @@
 
 !div_size = "800px"
 
-!total_width = 39
-!mp3_width   = 15
-!playlist_witdh = !total_width - !mp3_width - 1
+!total_width = 30
+!finder_width   = 10
+!player_witdh = !total_width - !finder_width - 1
 
 body
   :font 0.9em sans-serif
   :height = !div_size
-
-#main 
   +container()
   +span(!total_width)
 
-  #mp3s
-    +column(!mp3_width - 1)
+  #finder
+    +column(!finder_width - 1)
     +colborder()
     :height = !div_size
     :overflow auto
 
 
-  #playlist
-    +column(!playlist_witdh,"last")
+  #player
+    +column(!player_witdh,"last")
     table
-      +span(!playlist_witdh - 1)
-    :height = !div_size
-    :overflow auto
+      +span(!player_witdh - 1)
+      th
+        &.file
+          +span(8)
+        &.title, &.artist, &.album
+          +span(5)
+        &.track
+          +span(2)
+      tr.current
+        td
+          :background-color green
 
     ul#controls
       :list-style-type none
@@ -35,22 +41,4 @@ body
         :margin 1px 
         :padding 1px 
         :display inline
-
-table#songs
-  +span(!playlist_witdh )
-  td
-    +colborder()
-    &.file
-      +span(8)
-    &.title, &.artist, &.album
-      +span(5)
-    &.track
-      +span(2)
-  tr.current
-    td
-      :background-color green
-
-.ui-finder
-  +span(!mp3_width - 2)
-
 

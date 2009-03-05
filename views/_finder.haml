@@ -1,0 +1,3 @@
+%ul.finder{:rel => server} 
+  - info = Finder.file_tree($mp3dir); info[:first] = true
+  = haml :_directory, :layout => false, :locals => {:info => info}

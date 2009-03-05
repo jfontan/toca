@@ -1,0 +1,25 @@
+
+%a.make_playlist Playlist
+%a.clear_playlist Clear
+
+%ul#controls
+  %li.prev 
+    %a.prev{:href => '#'} prev
+  %li.play 
+    %a.play{:href => '#'} play
+  %li.stop 
+    %a.stop{:href => '#'} stop
+  %li.next 
+    %a.next{:href => '#'} next
+
+%table.tablesorter#playlist
+  %thead
+    %tr
+      %th.file File
+      %th.title Title
+      %th.artist Artist
+      %th.album Album
+      %th.track Track
+  %tbody
+
+
