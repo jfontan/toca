@@ -2,8 +2,8 @@
 :javascript
   eval('servers = #{$servers.to_json};')
 
-#finder
-  = haml :_finder, :layout => false, :locals => {:server => $server}
+#finders
+  -# = haml :_finder, :layout => false, :locals => {:server => $server}
 
 #player
   = haml :_player, :layout => false

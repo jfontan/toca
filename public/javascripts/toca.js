@@ -92,9 +92,30 @@ function actions(){
   });
 }
 
+function get_server_finder(server){
+  jsonp('http://' + server + '/finder', 
+    function(html){
+      item = $("" + html + "")
+      item.appendTo($('#finders'));
+      item.treeview();
+  })
+}
+
+function update_finders(){
+  $.ajax({
+    url: '/servers',
+    success: function(data){
+      eval("servers =" + data);
+      $(servers).each(function(){
+        get_server_finder(this);
+      })
+    }
+  })
+}
+
 function init_toca(){
+  update_finders();
   actions();
-  $('.finder').treeview();
   action('make_playlist', make_playlist);
   action('clear_playlist', function(){$('#playlist .playlistsong').remove()});
   init_soundmanager();

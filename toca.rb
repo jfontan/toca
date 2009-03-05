@@ -72,6 +72,14 @@ get '/' do
   haml :index
 end
 
+get '/finder' do
+
+  html = haml :_finder, :layout => false
+  
+  jasonp(html)
+end
+
+
 get '/directory' do
 
   name = params[:name]
@@ -106,4 +114,8 @@ get '/playlist_song' do
 end
 
 
+get '/servers' do
+  content_type 'text/json'
+  $servers.to_json
+end
 
