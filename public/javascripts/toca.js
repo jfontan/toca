@@ -1,7 +1,7 @@
 function action(name, func){
   $('.' + name).click(
     function(){ 
-      func(this); 
+      return(func(this)); 
   }).removeClass(name);
 }
 
@@ -24,7 +24,6 @@ function make_playlist(){
     $('tr.playlistsong').each(function(){
       song = $(this).attr("id")
       server = $(this).attr("rel")
-      alert(server);
       if ($(this).find('td:nth-child(2)').html() != ""){
         title = $(this).find('td:nth-child(2)').html();
       }else{
@@ -85,9 +84,8 @@ function add_dir2playlist(target){
 function play_song(target){
   server = $(target).parents('.finder').attr('rel');
   url =  "http://" + server + $(target).attr('href');
-  window.document.location = url;
+  location = url;
   return(false);
-   
 }
 
 function actions(){
