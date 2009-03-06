@@ -4,7 +4,7 @@
     %ul
 - else
   %li.directory{:rel => info[:name]}
-    %span.folder.directory= File.basename(info[:first] ? $server : info[:name])
+    %span.folder.directory= File.basename(info[:first] ? "Top" : info[:name])
     %a.dir2playlist{:href => '#'} add
     %ul.directory_contents
       - info[:directories].sort.each do |directory|
@@ -14,7 +14,7 @@
         %li.song.song2playlist{:rel => file}
           %span.file{:id => file}
             = File.basename(file)
-          %a{:href => '/song?name=' + file} play
+          %a.play_song{:href => '/song?name=' + file} play
 
 
 

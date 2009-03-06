@@ -24,6 +24,7 @@ function make_playlist(){
     $('tr.playlistsong').each(function(){
       song = $(this).attr("id")
       server = $(this).attr("rel")
+      alert(server);
       if ($(this).find('td:nth-child(2)').html() != ""){
         title = $(this).find('td:nth-child(2)').html();
       }else{
@@ -59,6 +60,7 @@ function add_song2playlist(target){
   jsonp('http://' + server + '/playlist_song?name=' + song, 
     function(html){
       item = $("" + html + "");
+      item.attr('rel',server);
       $('#playlist').append(item);
       actions();
   })
@@ -73,15 +75,24 @@ function add_dir2playlist(target){
     jsonp('http://' + server + '/playlist_song?name=' + name, 
       function(html){
         item = $("" + html + "");
+        item.attr('rel',server);
         $('#playlist').append(item);
         actions();
     })
   })
 }
 
+function play_song(target){
+  server = $(target).parents('.finder').attr('rel');
+  url =  "http://" + server + $(target).attr('href');
+  window.document.location = url;
+  return(false);
+   
+}
 
 function actions(){
   action('lazyload', fetch_directory);
+  action('play_song',play_song);
   action('song2playlist', add_song2playlist);
   action('dir2playlist', add_dir2playlist);
   action('delete_playlistsong',function(target){ $(target).parents('tr.playlistsong').remove()});
@@ -95,7 +106,9 @@ function actions(){
 function get_server_finder(server){
   jsonp('http://' + server + '/finder', 
     function(html){
-      item = $("" + html + "")
+      item = $("" + html + "");
+      item.attr('rel', server);
+      item.children('li').children('span').html("" + server + "");
       item.appendTo($('#finders'));
       item.treeview();
   })
