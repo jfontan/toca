@@ -42,7 +42,7 @@ function fetch_directory(target){
 
   jsonp('http://' + server + '/directory?name=' + directory, 
     function(html){
-      item = $("" + html + "")
+      item = $(html)
       item.insertAfter(target);
       
       finder = $(target).parents('.finder');
@@ -52,16 +52,22 @@ function fetch_directory(target){
 
 }
 
+function insert_in_playlist(html){
+    item = $(html);
+    item.attr('rel',server);
+    $('#playlist').append(item);
+    $('#playlist').trigger("update");
+    $('#playlist').tableDnD();
+    actions();
+}
+
 function add_song2playlist(target){
   song = $(target).attr('rel');
   server = $(target).parents('.finder').attr('rel');
 
   jsonp('http://' + server + '/playlist_song?name=' + song, 
     function(html){
-      item = $("" + html + "");
-      item.attr('rel',server);
-      $('#playlist').append(item);
-      actions();
+      insert_in_playlist(html);
   })
 }
 
@@ -73,10 +79,7 @@ function add_dir2playlist(target){
     name = $(this).attr('rel')
     jsonp('http://' + server + '/playlist_song?name=' + name, 
       function(html){
-        item = $("" + html + "");
-        item.attr('rel',server);
-        $('#playlist').append(item);
-        actions();
+        insert_in_playlist(html);
     })
   })
 }
@@ -130,7 +133,14 @@ function init_toca(){
   action('make_playlist', make_playlist);
   action('clear_playlist', function(){$('#playlist .playlistsong').remove()});
   init_soundmanager();
-  
+
+  $("#playlist").tablesorter({
+    headers: { 
+        4: { sorter : 'float' }, 
+        5: { sorter : 'float' } 
+    } 
+  })
+
 }
 
 $(init_toca)

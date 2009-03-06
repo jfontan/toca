@@ -56,9 +56,9 @@ def jasonp(html)
   if params[:jsoncallback]
     content_type 'text/json'
     begin
-      params[:jsoncallback] + '(' + {:html => [html]}.to_json + ')'
+      params[:jsoncallback] + '(' + {:html => html}.to_json + ')'
     rescue
-      params[:jsoncallback] + '(' + {:html => [html.to_utf8]}.to_json + ')'
+      params[:jsoncallback] + '(' + {:html => html.to_utf8}.to_json + ')'
     end
 
   else
