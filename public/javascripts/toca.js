@@ -141,6 +141,14 @@ function init_toca(){
     } 
   })
 
+  $('#add_server_link').click(function(){
+    server = $('#add_server_input').val()
+    if ($('.finder').filter('[rel='+server+']').length > 0){
+      alert("Server " + server + " is already displayed");
+    }else{
+      get_server_finder(server);
+    }
+  })
 }
 
 $(init_toca)
