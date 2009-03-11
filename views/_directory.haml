@@ -4,7 +4,7 @@
     %ul
 - else
   %li.directory{:rel => info[:name]}
-    %span.folder.directory= File.basename(info[:first] ? "Top" : info[:name])
+    %span.folder.directory.open_close= File.basename(info[:first] ? "Top" : info[:name])
     %a.dir2playlist{:href => '#'} add
     %ul.directory_contents
       - info[:directories].sort.each do |directory|

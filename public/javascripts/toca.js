@@ -47,7 +47,7 @@ function fetch_directory(target){
       
       finder = $(target).parents('.finder');
       $(target).remove();
-      finder.treeview({ add: item}); 
+//      finder.treeview({ add: item}); 
   })
 
 }
@@ -91,6 +91,11 @@ function play_song(target){
   return(false);
 }
 
+function open_close(target){
+  directory = $(target).parent('.directory');
+  toggle_directory(directory);
+}
+
 function actions(){
   action('lazyload', fetch_directory);
   action('play_song',play_song);
@@ -102,6 +107,8 @@ function actions(){
     $(target).parents('tr.playlistsong').addClass('current');
     play();
   });
+
+  action('open_close', open_close)
 }
 
 function get_server_finder(server){
@@ -111,7 +118,7 @@ function get_server_finder(server){
       item.attr('rel', server);
       item.children('li').children('span').html("" + server + "");
       item.appendTo($('#finders'));
-      item.treeview();
+//      item.treeview();
   })
 }
 
