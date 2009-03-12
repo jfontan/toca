@@ -14,12 +14,7 @@ function jsonp(url, process){
     
     $.getJSON(url,
       function(data){
-        try{
-          html = zip_inflate(data.html_zip)
-          process(html);
-        }catch(e){
-          html = data.html
-        }
+        html = data.html
         process(html);
         actions();
     })
