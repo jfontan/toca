@@ -23,5 +23,6 @@ toca=/$PWD CD=/$PWD/ filter="*.rb *.sass *.haml *.textile *.js" {
  javascripts=public/javascripts {
   play.js
   toca.js
+  list.js
  }
 }
