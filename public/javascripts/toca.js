@@ -14,7 +14,13 @@ function jsonp(url, process){
     
     $.getJSON(url,
       function(data){
-        process(data.html);
+        try{
+          html = zip_inflate(data.html_zip)
+          process(html);
+        }catch(e){
+          html = data.html
+        }
+        process(html);
         actions();
     })
 }
@@ -72,7 +78,7 @@ function add_song2playlist(target){
 }
 
 function add_dir2playlist(target){
-  songs = $(target).parent('li.directory').find('li.song');
+  songs = $(target).parent('li.dir').find('li.song');
   server = $(target).parents('.finder').attr('rel');
 
   $(songs).each(function(){
@@ -92,15 +98,15 @@ function play_song(target){
 }
 
 function open_close(target){
-  directory = $(target).parent('.directory');
+  directory = $(target).parent('.dir');
   toggle_directory(directory);
 }
 
 function actions(){
-  action('lazyload', fetch_directory);
+  action('lazy', fetch_directory);
   action('play_song',play_song);
-  action('song2playlist', add_song2playlist);
-  action('dir2playlist', add_dir2playlist);
+  action('song2pl', add_song2playlist);
+  action('dir2pl', add_dir2playlist);
   action('delete_playlistsong',function(target){ $(target).parents('tr.playlistsong').remove()});
   action('set_current',function(target){ 
     $(target).parents('tr.playlistsong').siblings().removeClass('current');

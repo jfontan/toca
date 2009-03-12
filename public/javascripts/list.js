@@ -1,9 +1,9 @@
 function close(directory){
-  $(directory).children('.directory_contents').hide();
+  $(directory).children('.contents').hide();
 }
 
 function open(directory){
-  $(directory).children('.directory_contents').show();
+  $(directory).children('.contents').show();
 }
 
 

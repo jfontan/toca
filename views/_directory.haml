@@ -1,18 +1,18 @@
 - if String === info
-  %li.directory.lazyload.closed{:rel => info}
+  %li.dir.lazy.closed{:rel => info}
     %span.folder= File.basename(info)
     %ul
 - else
-  %li.directory{:rel => info[:name]}
-    %span.folder.directory.open_close= File.basename(info[:first] ? "Top" : info[:name])
-    %a.dir2playlist{:href => '#'} add
-    %ul.directory_contents
+  %li.dir{:rel => info[:name]}
+    %span.folder.open_close= File.basename(info[:first] ? "Top" : info[:name])
+    %a.dir2pl{:href => '#'} add
+    %ul.contents
       - info[:directories].sort.each do |directory|
         = haml :_directory, :layout => false, :locals => {:info => directory}
 
       - info[:files].sort.each do |file|
-        %li.song.song2playlist{:rel => file}
-          %span.file{:id => file}
+        %li.song.song2pl{:rel => file}
+          %span.file
             = File.basename(file)
           %a.play_song{:href => '/song?name=' + file} play
 
