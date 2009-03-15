@@ -44,7 +44,7 @@ $servers << $server unless $servers.include? $server
 
 def check_path(file)
   dir = File.expand_path(File.dirname(file))
-  if dir !~ /^#{ File.expand_path($mp3dir) }/
+  if file != $mp3dir && dir !~ /^#{ File.expand_path($mp3dir) }/ 
     raise "Path invalid"
   else
     return true
@@ -52,18 +52,17 @@ def check_path(file)
 end
 
 
-def jasonp(html)
-  if params[:jsoncallback]
-    content_type 'text/json'
-    begin
-      params[:jsoncallback] + '(' + {:html => html}.to_json + ')'
-    rescue
-      params[:jsoncallback] + '(' + {:html => html.to_utf8}.to_json + ')'
-    end
+def jasonp(data)
+  content_type 'text/json'
 
+  json = data.to_json
+
+  if params[:jsoncallback]
+    return(params[:jsoncallback] + '(' + json + ')')
   else
-    html
+    return json
   end
+
 end
 
 #{{{ Controlers
@@ -72,28 +71,27 @@ get '/' do
   haml :index
 end
 
-get '/finder' do
-
-  html = haml :_finder, :layout => false
-  
-  jasonp(html)
-end
-
-
 get '/directory' do
+  path= params[:path]
+  path= $mp3dir if path== "Top"
+  check_path(path)
 
-  name = params[:name]
-  name = $mp3dir if name == "Top"
-  check_path(name)
+  info = Finder.file_tree(path)
 
-  info = Finder.file_tree(name)
-  info[:first] = true if name == $mp3dir
-
-  html = haml :_directory, :layout => false, :locals => {:info => info}
-
-  
-  jasonp(html)
+  jasonp(info)
 end
+
+get '/song_info' do
+  path = params[:path]
+  check_path(path)
+
+  info =  ID3::get(path)
+  info[:path] = path
+  info[:name] = File.basename(path)
+
+  jasonp(info)
+end
+
 
 get '/song' do
   name = params[:name]
@@ -101,16 +99,6 @@ get '/song' do
 
   content_type 'audio/mpeg'
   File.open(name).read
-end
-
-get '/playlist_song' do
-  name = params[:name]
-  check_path(name)
-
-  info =  ID3::get(name)
-  html = haml :_playlist_song, :layout => false, :locals => {:song =>  name, :info => info}
-
-  jasonp(html)
 end
 
 

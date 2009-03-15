@@ -22,9 +22,9 @@ function get_current(){
 
 function playlist(){
     list = []; 
-    $('tr.playlistsong').each(function(){
-      song = $(this).attr("id")
-      server = $(this).attr("rel")
+    $('tr.song').each(function(){
+      song = $(this).attr("data-path")
+      server = $(this).attr("data-server")
       list.push("http://" + server + "/song?name=" + song)
     })
     return(list)
