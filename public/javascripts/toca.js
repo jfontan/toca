@@ -33,7 +33,7 @@ function make_playlist(){
       playlist += "#EXTINF, " + title + "\n"
       playlist += "http://" + server + "/song?name=" + song + "\n"
     })
-    window.open(dataUrl(playlist,'audio/mpegurl'));  
+    location = dataUrl(playlist,'audio/mpegurl');
     return(false);
 }
 
@@ -48,7 +48,6 @@ function fetch_directory(target){
       
       finder = $(target).parents('.finder');
       $(target).remove();
-//      finder.treeview({ add: item}); 
   })
 
 }
@@ -119,7 +118,6 @@ function get_server_finder(server){
       item.attr('rel', server);
       item.children('li').children('span').html("" + server + "");
       item.appendTo($('#finders'));
-//      item.treeview();
   })
 }
 
