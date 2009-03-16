@@ -66,8 +66,23 @@ function clear_playlist(){
   $('#playlist').find('.song').remove();
 }
 
+function init_servers(){
+  $.ajax({
+     url: '/servers',
+     success: function(data){
+       eval("servers= " + data);
+       $(servers).each(function(){
+         $('#finders').append(finder(this.toString()));
+       })
+     }
+  })
+  
+
+}
+
 function init_toca(){
   init_soundmanager();
+  init_servers();
 
   $("#playlist").tablesorter({
     headers: { 
