@@ -2,17 +2,14 @@
 
 !div_size = "800px"
 
-!total_width = 30
-!finder_width   = 10
-!player_witdh = !total_width - !finder_width - 1
-
 body
+  :padding-left 2em
+  :padding-top 2em
   :font 0.9em sans-serif
   +container()
-  +span(!total_width)
 
   #finders
-    +column(!finder_width - 1)
+    +column(300)
     +colborder()
     :height = !div_size
     :overflow auto
@@ -29,11 +26,10 @@ body
 
 
   #player
-    +column(!player_witdh,"last")
+    +column(300,"last")
     :height = !div_size
     :overflow auto
     table
-      +span(!player_witdh - 1)
       th
         &.file
           +span(8)

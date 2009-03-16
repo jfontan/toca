@@ -78,13 +78,25 @@ function init_servers(){
   })
 }
 
-function fit_height(){
-  var total = $(window).height();
+function fit_size(){
+  var height = $(window).height();
+  var width = $(window).width();
   var offset = $('#content').offset();
 
-  size = total - offset.top;
-  $('#finders').height(size);
-  $('#player').height(size);
+
+  h = height - offset.top;
+  w = width -  offset.left;
+
+  $('#finders').height(h);
+  $('#player').height(h);
+
+  var finder_w = w * 0.30;
+  var player_w = w * 0.60;
+
+  $('body').width(width);
+  $('#finders').width(finder_w);
+  $('#player').width(player_w);
+
 }
 
 function init_toca(){
@@ -109,8 +121,8 @@ function init_toca(){
     }
   })
 
-  fit_height();
-  $(window).resize(fit_height);
+  fit_size();
+  $(window).resize(fit_size);
 }
 
 $(init_toca)
