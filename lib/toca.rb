@@ -31,7 +31,7 @@ module Finder
       :directories => []
     }
 
-    Dir.glob(File.join(directory, '*')).each{|f|
+    Dir.glob(File.join(directory, '*')).sort.each{|f|
       f = f.to_utf8
       if File.directory? f
         tree[:directories] << file_tree(f, levels - 1, filter) if has_music? f
