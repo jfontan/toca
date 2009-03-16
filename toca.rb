@@ -31,9 +31,7 @@ end
 config = YAML::load(File.open('conf/conf.yaml'))
 
 $mp3dir = config[:mp3dir]
-$server = config[:server]
 $servers = config[:syndication] 
-$servers << $server unless $servers.include? $server
 
 
 
