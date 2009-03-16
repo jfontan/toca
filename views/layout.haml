@@ -21,6 +21,7 @@
     -# Other
     %script{ :type => "text/javascript", :src => "/javascripts/jquery.tablednd.js"}
     %script{ :type => "text/javascript", :src => "/javascripts/dataUrl.js"}
+    %script{ :type => "text/javascript", :src => "/javascripts/jquery.dimensions.js"}
 
     -# Finder
     %script{ :type => "text/javascript", :src => "/plugins/finder/javascripts/jquery.scrollTo-1.4.0-min.js"}
@@ -28,7 +29,9 @@
     %link{:rel => 'stylesheet', :href => '/plugins/finder/stylesheets/default.css'}
     %link{:rel => 'stylesheet', :href => '/plugins/finder/stylesheets/ui.finder.css'}
     %link{:rel => 'stylesheet', :href => '/plugins/finder/stylesheets/ui.theme.css'}
-    
+
+
+
     %script{ :type => "text/javascript", :src => "/javascripts/html.js"}
     %script{ :type => "text/javascript", :src => "/javascripts/list.js"}
     -# General
@@ -36,5 +39,6 @@
     %link{:rel => 'stylesheet', :href => '/toca.css'}
 
   %body
-    = yield
+    #content 
+      = yield
 

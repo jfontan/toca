@@ -76,8 +76,15 @@ function init_servers(){
        })
      }
   })
-  
+}
 
+function fit_height(){
+  var total = $(window).height();
+  var offset = $('#content').offset();
+
+  size = total - offset.top;
+  $('#finders').height(size);
+  $('#player').height(size);
 }
 
 function init_toca(){
@@ -101,6 +108,9 @@ function init_toca(){
        $('#finders').append(finder(server));
     }
   })
+
+  fit_height();
+  $(window).resize(fit_height);
 }
 
 $(init_toca)
