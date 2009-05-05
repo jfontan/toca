@@ -61,6 +61,14 @@ function play(){
     return(false);
 }
 
+function pause(){
+    if (song != null){
+        song.togglePause();
+    }
+    return(false);
+}
+
+
 function stop(){
     if (song != null){
         song.stop();
@@ -89,6 +97,7 @@ function init_soundmanager(){
    
 
     $('a.play').click(play)
+    $('a.pause').click(pause)
     $('a.stop').click(stop)
     $('a.next').click(next)
     $('a.prev').click(prev)
