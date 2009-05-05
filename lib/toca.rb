@@ -1,5 +1,7 @@
 require 'id3lib'
 require 'iconv' 
+require 'memoize'
+include Memoize
 
 class String
   $ic = Iconv.new('UTF-8//IGNORE', 'UTF-8')
@@ -9,6 +11,7 @@ class String
 end
 
 module Finder
+  
   def self.has_music?(directory, filter = '.*mp3$')
     Dir.glob(directory + '/*').each{|f|
       if File.directory? f
@@ -42,6 +45,11 @@ module Finder
 
     tree
   end
+
+  class << self
+    memoize :file_tree
+    memoize :has_music?
+  end
 end
 
 module ID3
@@ -60,6 +68,10 @@ module ID3
     ID3Lib::Tag.new(file).frame(:APIC)
   end
   
+  class << self
+    memoize :get
+  end
+
 end
 
 if __FILE__ == $0
