@@ -21,8 +21,9 @@ toca=/$PWD CD=/$PWD/ filter="*.rb *.sass *.haml *.textile *.js" {
   }
  }
  javascripts=public/javascripts {
+  html.js
+  list.js
   play.js
   toca.js
-  list.js
  }
 }

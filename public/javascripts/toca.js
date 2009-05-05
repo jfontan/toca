@@ -25,13 +25,14 @@ function play_song(target){
 function dir2playlist(){
   var dir = $(this).parent('.directory');
   var server = dir.parents('.finder').attr('data-server');
-  var songs = $(dir).find('.file span');
+  var songs = $(dir).find('.file');
 
-  $(songs).each(song2playlist);
+  $(songs).each(function(){song2playlist(this); return true});
+  return(false);
 }
 
-function song2playlist(){
-  var song = $(this).parent('.file');
+function song2playlist(song){
+  song = $(song);
   var server = song.parents('.finder').attr('data-server');
   var path = song.attr('data-path');
   var playlist = $('#playlist');
@@ -41,6 +42,7 @@ function song2playlist(){
       var song = playlist_song(info, server);
       playlist.append(song);
   })
+  return(false);
 }
 
 function replace_directory(){

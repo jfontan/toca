@@ -31,7 +31,7 @@ function finder_file(name, path){
   var file = tag('li');
   file.addClass('file').attr('data-path', path.replace(/\/$/,'') +  '/' + name);
   file.append(span(name));
-  file.find('span').click(song2playlist);
+  file.find('span').click(function(){ song2playlist($(this).parent('.file'))});
 
   return(file);
 }

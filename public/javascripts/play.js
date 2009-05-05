@@ -49,7 +49,7 @@ function play(){
             song = soundManager.createSound({
                 id: 'Player',
                 url: song,
-                volume: 50,
+                volume: 100,
                 onfinish: next
                 });
             song.play();
@@ -84,6 +84,9 @@ function prev(){
 }
 
 function init_soundmanager(){
+
+
+   
 
     $('a.play').click(play)
     $('a.stop').click(stop)
