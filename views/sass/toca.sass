@@ -1,5 +1,8 @@
 @import blueprint/modules/grid.sass
 
+
+// Basics
+
 !div_size = "800px"
 
 body
@@ -17,11 +20,7 @@ body
       :list-style none
       :padding-left 1em
 
-      li.directory > span
-        :font-size 1.2em
 
-    ul.finder > span
-      :font-size 1.2em
         
 
 
@@ -51,3 +50,21 @@ body
 
 a
   :margin 2px
+
+// Style
+
+ul
+  &.finder > span
+    :color red
+    :font-size 1.2em
+
+  li.directory 
+    & > span
+      :width 100%
+      :color blue
+      &:hover
+        :background-color yellow
+  li.file > span
+    &:hover
+      :background-color yellow
+    :color grey
