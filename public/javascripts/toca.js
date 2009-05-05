@@ -41,6 +41,7 @@ function song2playlist(song){
     function(info){
       var song = playlist_song(info, server);
       playlist.append(song);
+      playlist.tableDnD();
   })
   return(false);
 }
@@ -110,7 +111,7 @@ function init_toca(){
         4: { sorter : 'float' }, 
         5: { sorter : 'float' } 
     } 
-  })
+  }).tableDnD();
 
   $('.clear_playlist').click(clear_playlist);
 
