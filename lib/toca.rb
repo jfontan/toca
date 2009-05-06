@@ -57,10 +57,10 @@ module ID3
   def self.get(file)
     tag = ID3Lib::Tag.new(file)
     {
-      :title => tag.title.to_utf8,
-      :album => tag.album.to_utf8,
-      :artist => tag.artist.to_utf8,
-      :track => tag.track.to_utf8,
+      :title => tag.title ? tag.title.to_utf8 : "",
+      :album => tag.album ? tag.album.to_utf8 : "",
+      :artist => tag.artist ? tag.artist.to_utf8 : "",
+      :track => tag.track ? tag.track.to_utf8 : "",
     }
   end
   
