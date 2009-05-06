@@ -40,7 +40,7 @@ function play(){
             current = 0
         update_current(current);
 
-        song = list[current - 1];
+        song_url = list[current - 1];
 
         try{
             soundManager.destroySound('Player');
@@ -48,10 +48,11 @@ function play(){
         try{
             song = soundManager.createSound({
                 id: 'Player',
-                url: song,
+                url: song_url,
                 volume: 100,
                 onfinish: next
                 });
+            window.document.title = "[ " + song_url.replace(/.*name=(.*\/)?/,'') + " ]"
             song.play();
         }catch(e){
             alert(e)
@@ -92,9 +93,6 @@ function prev(){
 }
 
 function init_soundmanager(){
-
-
-   
 
     $('a.play').click(play)
     $('a.pause').click(pause)
